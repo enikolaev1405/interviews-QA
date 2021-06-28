@@ -63,7 +63,7 @@ assert get_missing(data) == 57
 
 
 
-Реализация контекстного менеджера (например, для открытия файла или доступа к БД)
+# Реализация контекстного менеджера (например, для открытия файла или доступа к БД)
   
   print([0][0])
   print([0][:])
@@ -77,21 +77,22 @@ assert get_missing(data) == 57
   b[0] = 10
   print(a)
   print(b)
-    
+  
+ # Генератор списков
   a = range(1,7)
   c = [x**2 for x in range(10)]
   print ([x for x in c if x % 2 == 0])
   print([x for x in a if x > 3])
   print(filter(lambda el: el == 5, a))
   print(map(lambda el: el * -1, a))
-    
+  
+  Как добавить элемент в список, что будет если выполнить 
   a.append(7)
-  print
-(a)
-    
+  
+  Как удалить последний элемент списка
   a.pop()
   print(a)
-    
+  Что будет?
   print([1] * 5)
 
 
@@ -105,47 +106,3 @@ def is_palindrom(value):
 assert is_palindrom(1221)
 assert is_palindrom(13231)
 assert not is_palindrom(123)
-
-
-# Функция должна распознавать является ли тема письма стрессовой. 
-# Стрессовая тема определяется тем, что все буквы в верхнем регистре, 
-# и / или заканчиваются как минимум тремя восклицательными знаками, 
-# и / или содержат по крайней мере одно из следующих слов-маркеров: "help", "asap", "urgent". 
-# Любое из этих слов-маркеров может быть написано по-разному: 
-# «HELP», «help», «HeLp», «H! E! L! P!», «H-E-L-P», и даже очень непринужденно «HHHEEEEEEEEELLP».
-# Входные данные: Тема письма в виде строки.
-# Выходные данные: Boolean.
-# Предварительное условие: Тема может содержать до 100 букв.
-
-def is_stressful(subj):
-    pass
-
-assert is_stressful("Headlamp, wastepaper bin and supermagnificently") == False, "First"
-assert is_stressful("I neeed HELP") == True, "Second"
-assert is_stressful("H! E! L! P!") == True, "Second"
-assert is_stressful("HHHEEEEEEEEELLP") == True, "Second"
-
-# Вам дана строка и два маркера (начальный и конечный). 
-# Вам необходимо найти текст, заключенный между двумя этими маркерами. Но есть несколько важных условий:
-
-# Начальный и конечный маркеры всегда разные
-# Если нет начального маркера, то началом считать начало строки
-# Если нет конечного маркера, то концом считать конец строки
-# Если нет ни конечного, ни начального маркеров, то просто вернуть всю строку
-# Если конечный маркер стоит перед начальным, то вернуть пустую строку
-
-# Input: Три аргумента. Все строки. Второй и третий аргументы это начальный и конечный маркеры.
-# Output: Строка.
-# Предусловия: не может быть более одного маркера одного типа
-
-
-def between_markers(text: str, begin: str, end: str) -> str:
-    pass
-
-assert between_markers('What is >apple<', '>', '<') == "apple", "One sym"
-assert between_markers("<head><title>My new site</title></head>",
-                       "<title>", "</title>") == "My new site", "HTML"
-assert between_markers('No[/b] hi', '[b]', '[/b]') == 'No', 'No opened'
-assert between_markers('No [b]hi', '[b]', '[/b]') == 'hi', 'No close'
-assert between_markers('No hi', '[b]', '[/b]') == 'No hi', 'No markers at all'
-assert between_markers('No <hi>', '>', '<') == '', 'Wrong direction'
