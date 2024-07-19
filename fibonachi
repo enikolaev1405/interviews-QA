@@ -1,0 +1,25 @@
+import pytest
+
+
+def fibonachi(num: int):
+    result = [1, 1]
+    if num < 1:
+        return []
+    for _ in range(num - 2):
+        result.append(result[-1] + result[-2])
+    return result[:num]
+
+
+@pytest.mark.parametrize(
+    ["num", "result"],
+    [
+        [-1, []],
+        [0, []],
+        [1, [1]],
+        [2, [1, 1]],
+        [5, [1, 1, 2, 3, 5]],
+        [10, [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]],
+    ]
+)
+def test_fibonachi(num, result):
+    assert fibonachi(num) == result
