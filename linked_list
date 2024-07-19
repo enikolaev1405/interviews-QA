@@ -1,0 +1,101 @@
+class Item:
+    def __init__(self, value, prev_item=None, next_item=None):
+        self.value = value
+        self.prev_item = prev_item
+        self.next_item = next_item
+
+
+class LinkedList:
+    def __init__(self):
+        self._first = None
+        self._last = None
+        self._cursor = None
+        self._len = 0
+
+    def append(self, value):
+        self._len += 1
+        if self._first is None:
+            self._first = self._last = Item(value)
+            return
+
+        next_item = Item(value, self._last)
+        self._last.next_item = next_item
+        self._last = next_item
+
+    def pop(self, index):
+        item = self._get(index)
+        self._len -= 1
+        if item.prev_item:
+            item.prev_item.next_item = item.next_item
+
+        if item.next_item:
+            item.next_item.prev_item = item.prev_item
+
+        return item.value
+
+    def _get(self, index):
+        if not self._first:
+            raise IndexError
+
+        if index < 0:
+            i = -1
+            item = self._last
+            while i > index:
+                i -= 1
+                item = item.prev_item
+                if not item:
+                    raise IndexError
+        else:
+            i = 0
+            item = self._first
+            while i < index:
+                i += 1
+                item = item.next_item
+                if not item:
+                    raise IndexError
+        return item
+
+    def __len__(self):
+        return self._len
+
+    def __getitem__(self, index):
+        return self._get(index).value
+
+    def __next__(self):
+        if not self._cursor:
+            self._cursor = self._first
+        else:
+            self._cursor = self._cursor.next_item
+
+        if not self._cursor:
+            raise StopIteration
+
+        return self._cursor.value
+
+    def __iter__(self):
+        return self
+
+    def __str__(self):
+        result = "[ "
+        item = self._first
+
+        while True:
+            if not item:
+                result += "]"
+                return result
+            result += f"{item.value} "
+            item = item.next_item
+
+
+l = LinkedList()
+print(l)
+l.append(1)
+l.append(2)
+l.append(3)
+l.append(4)
+l.append(5)
+print(l)
+
+print(l.pop(-2))
+
+print(len(l))
