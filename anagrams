@@ -1,0 +1,40 @@
+# Найдите все анаграммы в массиве слов. Функция должна возвращать массив с массивами, где каждый внутренний массив - это набор слов,
+# которые являются анаграммой друг к другу. Слова без анаграмм не должны попадать в результат.
+#
+# FAQ: Анаграмма - слово или словосочетание, образованное путём перестановки букв, составляющих другое слово (или словосочетание).
+#
+# ["veer","lake","item","kale","mite","ever","rev"] -> [["veer","ever"],["lake","kale"],["item","mite"]]  == solution()
+# ["there","is","no","anagrams","foo","bar"]  -> []
+
+import pytest
+
+
+def find_anagrams(words):
+    result = []
+    while words:
+        word = words.pop(0)
+
+        i = 0
+        anagrams = [word]
+        while i < len(words):
+            if sorted(words[i]) == sorted(word):
+                anagrams.append(words.pop(i))
+            else:
+                i += 1
+
+        if len(anagrams) > 1:
+            result.append(anagrams)
+    return result
+
+
+@pytest.mark.parametrize("words,result", [
+    (["veer", "lake", "item", "kale", "mite", "ever", "rev"], [["veer", "ever"], ["lake", "kale"], ["item", "mite"]]),
+    (["meat", "mat", "team", "mate", "eat", "mate"], [["meat", "team", "mate", "mate"]]),
+    (["there", "is", "no", "anagrams", "foo", "bar"], []),
+    (["guohc", "guohc", "cough", "morning", "adigrne", "osls", "sneeze", "knowledge", "nitwer", "distribution", "water",
+      "ewvi", "event", "oriintdusbti", "trnwie", "water", "nuaegalg", "osls", "gelugaan", "question"],
+     [["guohc", "guohc", "cough"], ["osls", "osls"], ["nitwer", "trnwie"], ["distribution", "oriintdusbti"],
+      ["water", "water"], ["nuaegalg", "gelugaan"]])
+])
+def test_find_anagrams(words, result):
+    assert find_anagrams(words) == result
