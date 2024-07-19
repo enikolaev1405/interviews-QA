@@ -1,0 +1,29 @@
+import random
+
+
+class VirtualMachineStates:
+    STOPPED = "stopped"
+    RUNNING = "running"
+    PAUSED = "paused"
+
+
+class VirtualMachine:
+    STATE_MOVES = {
+        VirtualMachineStates.STOPPED: [VirtualMachineStates.RUNNING],
+        VirtualMachineStates.RUNNING: [VirtualMachineStates.STOPPED, VirtualMachineStates.PAUSED],
+        VirtualMachineStates.PAUSED: [VirtualMachineStates.RUNNING]
+    }
+
+    def __init__(self):
+        self.state = VirtualMachineStates.STOPPED
+
+    def do_random_action(self):
+        states = self.STATE_MOVES[self.state]
+        self.state = random.choice(states)
+
+
+def test_vm():
+    vm = VirtualMachine()
+    for _ in range(100):
+        vm.do_random_action()
+        print(vm.state)
